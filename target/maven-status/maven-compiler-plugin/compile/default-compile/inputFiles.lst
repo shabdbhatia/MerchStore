@@ -1,0 +1,11 @@
+/Users/shabd/NetBeansProjects/ShopApp/src/main/java/com/mycompany/shopapp/servlets/admin/ProductManagementServlet.java
+/Users/shabd/NetBeansProjects/ShopApp/src/main/java/com/mycompany/shopapp/servlets/admin/UserManagementServlet.java
+/Users/shabd/NetBeansProjects/ShopApp/src/main/java/com/mycompany/shopapp/servlets/SignupServlet.java
+/Users/shabd/NetBeansProjects/ShopApp/src/main/java/com/mycompany/shopapp/model/User.java
+/Users/shabd/NetBeansProjects/ShopApp/src/main/java/com/mycompany/shopapp/servlets/LoginServlet.java
+/Users/shabd/NetBeansProjects/ShopApp/src/main/java/com/mycompany/shopapp/model/Order.java
+/Users/shabd/NetBeansProjects/ShopApp/src/main/java/com/mycompany/shopapp/model/Product.java
+/Users/shabd/NetBeansProjects/ShopApp/src/main/java/com/mycompany/shopapp/JakartaRestConfiguration.java
+/Users/shabd/NetBeansProjects/ShopApp/src/main/java/com/mycompany/shopapp/dao/UserDAO.java
+/Users/shabd/NetBeansProjects/ShopApp/src/main/java/com/mycompany/shopapp/resources/JakartaEE10Resource.java
+/Users/shabd/NetBeansProjects/ShopApp/src/main/java/com/mycompany/shopapp/dao/ProductDAO.java

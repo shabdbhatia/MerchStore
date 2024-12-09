@@ -45,5 +45,7 @@
                 %>
             </tbody>
         </table>
+            
+        <a href="../Pages/Admin/admin_dashboard.jsp" >Back to Admin Dashboard</a>
     </body>
 </html>

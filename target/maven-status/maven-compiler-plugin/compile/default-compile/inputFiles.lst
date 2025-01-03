@@ -8,4 +8,5 @@
 /Users/shabd/NetBeansProjects/ShopApp/src/main/java/com/mycompany/shopapp/JakartaRestConfiguration.java
 /Users/shabd/NetBeansProjects/ShopApp/src/main/java/com/mycompany/shopapp/dao/UserDAO.java
 /Users/shabd/NetBeansProjects/ShopApp/src/main/java/com/mycompany/shopapp/resources/JakartaEE10Resource.java
+/Users/shabd/NetBeansProjects/ShopApp/src/main/java/com/mycompany/shopapp/servlets/user/UserDashboardServlet.java
 /Users/shabd/NetBeansProjects/ShopApp/src/main/java/com/mycompany/shopapp/dao/ProductDAO.java

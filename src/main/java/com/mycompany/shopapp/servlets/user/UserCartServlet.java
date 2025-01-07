@@ -5,6 +5,7 @@
 package com.mycompany.shopapp.servlets.user;
 
 import com.mycompany.shopapp.dao.ProductDAO;
+import com.mycompany.shopapp.model.OrderItem;
 import com.mycompany.shopapp.model.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,96 +16,56 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
  * @author shabd
  */
-@WebServlet(name = "UserCartServlet", urlPatterns = {"/add-to-cart"})
+@WebServlet(name = "UserCartServlet", urlPatterns = {"/cart"})
 public class UserCartServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet UserCartServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet UserCartServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        int productId = Integer.parseInt(request.getParameter("productId"));
-        int quantity = Integer.parseInt(request.getParameter("quantity"));
-
-        ProductDAO productDAO = new ProductDAO();
-        Product product = productDAO.getProductById(productId);
-
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        List<Product> cart = (List<Product>) session.getAttribute("cart");
+        List<OrderItem> cartItems = (List<OrderItem>) session.getAttribute("CartItems");
 
-        if (cart == null) {
-            cart = new ArrayList<>();
+        if (cartItems == null) {
+            cartItems = new ArrayList<>();
         }
 
-        for (int i = 0; i < quantity; i++) {
-            cart.add(product);
+        String action = request.getParameter("action");
+        int productId = Integer.parseInt(request.getParameter("productId"));
+
+        if (null != action) switch (action) {
+            case "add":
+                double price = Double.parseDouble(request.getParameter("price"));
+                boolean exists = false;
+                for (OrderItem item : cartItems) {
+                    if (item.getProductId() == productId) {
+                        item.setQuantity(item.getQuantity() + 1); // Increment quantity
+                        exists = true;
+                        break;
+                    }
+                }   if (!exists) {
+                    cartItems.add(new OrderItem(0, productId, 1, price));
+                }   break;
+            case "update":
+                int quantity = Integer.parseInt(request.getParameter("quantity"));
+                cartItems.stream()
+                        .filter(item -> item.getProductId() == productId)
+                        .forEach(item -> item.setQuantity(quantity));
+                break;
+            case "remove":
+                cartItems.removeIf(item -> item.getProductId() == productId);
+                break;
+            default:
+                break;
         }
 
-        session.setAttribute("cart", cart);
-        response.sendRedirect("user-dashboard");
+        session.setAttribute("CartItems", cartItems);
+        response.sendRedirect("./Pages/User/cart.jsp");
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }

@@ -8,9 +8,11 @@
 <html>
 <head>
     <title>User Signup</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/Pages/globalstyle.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/Pages/Login/LoginCss.css"/>
 </head>
 <body>
-    <h2>User Signup</h2>
+    <h2>Signup</h2>
 
     <%-- Display error or success messages based on query parameters --%>
     <%
@@ -27,7 +29,7 @@
         <a href="${pageContext.request.contextPath}/Pages/Login/login.jsp">Login Here</a>
     <% } %>
 
-    <form action="${pageContext.request.contextPath}/signup" method="post">
+    <form id="login-container" action="${pageContext.request.contextPath}/signup" method="post">
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required><br><br>
 

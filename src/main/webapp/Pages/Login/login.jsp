@@ -9,18 +9,20 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Login|Vivum 2024</title>
+        <title>Login</title>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/Pages/globalstyle.css"/>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/Pages/Login/LoginCss.css"/>
     </head>
     <body>
-        <h2>Login</h2>
-        <form action="${pageContext.request.contextPath}/login" method="post">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
+        <h2>Login Portal</h2>
+        <form  action="${pageContext.request.contextPath}/login" method="post" id="login-container">
+            <!--<label for="username">Username:</label>-->
+            <input type="text" id="username" name="username" placeholder="Username" required>
             <br>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
+            <!--<label for="password">Password:</label>-->
+            <input type="password" id="password" name="password" placeholder="Password" required>
             <br>
-            <input type="submit" value="Login">
+            <button type="submit" value="Login"/>Login</button>
         </form>
     <c:if test="${not empty errorMessage}">
         <p style="color:red">${errorMessage}</p>

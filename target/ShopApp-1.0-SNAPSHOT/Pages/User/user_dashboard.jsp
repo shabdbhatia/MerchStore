@@ -11,6 +11,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/Pages/globalstyle.css"/>
+
         <title>Product Catalogue</title>
 
         <style>
@@ -59,9 +61,11 @@
                     <td><%= product.getDescription()%></td>
                     <td>₹<%= product.getPrice()%></td>
                     <td>
-                        <form action="add-to-cart" method="post">
+                        <form action="cart" method="post">
+                            <input type="hidden" name="action" value="add" />
                             <input type="hidden" name="productId" value="<%= product.getId()%>">
-                            <input type="number" name="quantity" value="1" min="1" />
+                            <input type="hidden" name="price" value="<%= product.getPrice()%>">
+                            <input type="number" name="qty" value="1" min="1" />
                             <button type="submit">Add to Cart</button>
                         </form>
                     </td>
@@ -79,5 +83,7 @@
             </tbody>
         </table>
         <a href="./Pages/Login/login.jsp">Logout</a>
+        <a href="cart">Cart</a>
+        <a href="<%= request.getContextPath()%>/order-history">Order History</a>
     </body>
 </html>

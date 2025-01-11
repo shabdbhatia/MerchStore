@@ -1,0 +1,33 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Jan 11, 2025, 4:10:48 PM
+    Author     : shabd
+*/
+
+.cart-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /*justify-content: space-evenly;*/
+    width: 80%;
+}
+
+.checkout-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 75%;
+}
+.continue-button {
+    width: 15vh;
+    height: 6vh;
+}
+
+.checkout-button {
+    width: 15vh;
+    height: 6vh;
+}

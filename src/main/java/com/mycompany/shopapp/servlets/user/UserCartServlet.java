@@ -26,46 +26,71 @@ import java.util.Map;
  */
 @WebServlet(name = "UserCartServlet", urlPatterns = {"/cart"})
 public class UserCartServlet extends HttpServlet {
-
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         List<OrderItem> cartItems = (List<OrderItem>) session.getAttribute("CartItems");
 
         if (cartItems == null) {
             cartItems = new ArrayList<>();
+            session.setAttribute("CartItems", cartItems);
         }
 
-        String action = request.getParameter("action");
-        int productId = Integer.parseInt(request.getParameter("productId"));
+        // Forward to the cart.jsp page
+        request.setAttribute("cartItems", cartItems);
+        request.getRequestDispatcher("/Pages/User/cart.jsp").forward(request, response);
+    }
+    
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    HttpSession session = request.getSession();
+    List<OrderItem> cartItems = (List<OrderItem>) session.getAttribute("CartItems");
 
-        if (null != action) switch (action) {
+    if (cartItems == null) {
+        cartItems = new ArrayList<>();
+    }
+
+    String action = request.getParameter("action");
+    int productId = Integer.parseInt(request.getParameter("productId"));
+
+    if (action != null) {
+        switch (action) {
             case "add":
+                String name = request.getParameter("name");
                 double price = Double.parseDouble(request.getParameter("price"));
+                int qty = Integer.parseInt(request.getParameter("qty")); // Read the quantity from the request
                 boolean exists = false;
+
                 for (OrderItem item : cartItems) {
                     if (item.getProductId() == productId) {
-                        item.setQuantity(item.getQuantity() + 1); // Increment quantity
+                        item.setQuantity(item.getQuantity() + qty); // Increment quantity by selected value
                         exists = true;
                         break;
                     }
-                }   if (!exists) {
-                    cartItems.add(new OrderItem(0, productId, 1, price));
-                }   break;
+                }
+
+                if (!exists) {
+                    cartItems.add(new OrderItem(0, name,  productId, qty, price)); // Add new item with selected quantity
+                }
+                break;
+
             case "update":
                 int quantity = Integer.parseInt(request.getParameter("quantity"));
                 cartItems.stream()
                         .filter(item -> item.getProductId() == productId)
                         .forEach(item -> item.setQuantity(quantity));
                 break;
+
             case "remove":
                 cartItems.removeIf(item -> item.getProductId() == productId);
                 break;
+
             default:
                 break;
         }
-
-        session.setAttribute("CartItems", cartItems);
-        response.sendRedirect("./Pages/User/cart.jsp");
     }
+
+    session.setAttribute("CartItems", cartItems);
+    response.sendRedirect(request.getContextPath() + "/cart");
+}
 }

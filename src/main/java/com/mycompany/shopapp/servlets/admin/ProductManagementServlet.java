@@ -72,14 +72,36 @@ public class ProductManagementServlet extends HttpServlet {
                 response.sendRedirect("productManagement");
                 break;
 
+//            case "edit":
+//                int id = Integer.parseInt(request.getParameter("id"));
+//                String editName = request.getParameter("name");
+//                String editDescription = request.getParameter("description");
+//                double editPrice = Double.parseDouble(request.getParameter("price"));
+//
+//                Part editImagePart = request.getPart("image");
+//                byte[] editImage = editImagePart.getInputStream().readAllBytes();
+//                productDAO.updateProduct(id, editName, editDescription, editPrice, editImage);
+//                response.sendRedirect("productManagement");
+//                break;
             case "edit":
                 int id = Integer.parseInt(request.getParameter("id"));
                 String editName = request.getParameter("name");
                 String editDescription = request.getParameter("description");
                 double editPrice = Double.parseDouble(request.getParameter("price"));
 
+                // Retrieve the uploaded image
                 Part editImagePart = request.getPart("image");
-                byte[] editImage = editImagePart.getInputStream().readAllBytes();
+                byte[] editImage = null;
+
+                if (editImagePart != null && editImagePart.getSize() > 0) {
+                    // A new image was uploaded, read its bytes
+                    editImage = editImagePart.getInputStream().readAllBytes();
+                } else {
+                    // No new image uploaded, retrieve the existing image from the database
+                    Product existingProduct = productDAO.getProductById(id);
+                    editImage = existingProduct.getImage(); // Assuming Product has a `getImage()` method
+                }
+
                 productDAO.updateProduct(id, editName, editDescription, editPrice, editImage);
                 response.sendRedirect("productManagement");
                 break;

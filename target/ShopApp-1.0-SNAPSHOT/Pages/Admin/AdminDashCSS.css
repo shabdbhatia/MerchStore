@@ -7,6 +7,128 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     Author     : shabd
 */
 
-body{
-    background-color: red;
+form {
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+form input[type="text"],
+form input[type="number"],
+form input[type="file"],
+form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+form button {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+}
+
+/* Images */
+img {
+    border-radius: 5px;
+    max-width: 100%;
+    height: auto;
+}
+
+/* Links */
+.back-link {
+    display: block;
+    text-align: center;
+    margin: 20px;
+    font-size: 16px;
+}
+
+/* Admin Dashboard */
+.dashboard-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-links ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: center;
+}
+
+.dashboard-links ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+/* Order Management */
+.order-actions form {
+    display: inline-block;
+}
+
+.dashboard-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 2rem;
+}
+
+.dashboard-tile {
+    width: 200px;
+    height: 200px;
+    background-color: #fff;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+    text-decoration: none;
+    color: #333;
+}
+
+.dashboard-tile:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+.dashboard-tile svg {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 1rem;
+}
+
+.dashboard-tile span {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    table {
+        font-size: 12px;
+    }
+
+    button {
+        font-size: 12px;
+        padding: 8px;
+    }
 }

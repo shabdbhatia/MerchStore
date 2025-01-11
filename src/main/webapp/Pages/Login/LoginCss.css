@@ -1,5 +1,9 @@
+.navbar{
+    margin-bottom: 8rem;
+}
+
 body{
-    margin-top: 10rem;
+    /*margin-top: 10rem;*/
 }
 
 #login-container {

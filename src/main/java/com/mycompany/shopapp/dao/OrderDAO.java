@@ -91,12 +91,13 @@ public class OrderDAO {
         List<Order> orders = new ArrayList<>();
         String orderSql = "SELECT * FROM orders";
         String itemSql = "SELECT * FROM order_items WHERE order_id = ?";
-
+        System.out.println("Stared getting all orders");
         try (Connection conn = getConnection(); PreparedStatement orderStmt = conn.prepareStatement(orderSql)) {
             ResultSet rs = orderStmt.executeQuery();
 
             while (rs.next()) {
                 int orderId = rs.getInt("id");
+//                int name = rs.getInt("name");
                 int userId = rs.getInt("user_id");
                 double totalPrice = rs.getDouble("total_price");
                 Timestamp orderDate = rs.getTimestamp("order_date");
@@ -109,6 +110,7 @@ public class OrderDAO {
                     while (itemRs.next()) {
                         OrderItem item = new OrderItem(
                                 itemRs.getInt("id"),
+//                                itemRs.getString("name"),
                                 itemRs.getInt("product_id"),
                                 itemRs.getInt("quantity"),
                                 itemRs.getDouble("price")
@@ -118,11 +120,14 @@ public class OrderDAO {
                 }
 
                 orders.add(new Order(orderId, userId, orderDate, totalPrice, items));
+                System.out.println("Added individual order");
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+        System.out.println("Returning Orders");
         return orders;
+        
     }
 
     public List<Order> getOrdersByUserId(int userId) {
@@ -136,6 +141,7 @@ public class OrderDAO {
 
             while (rs.next()) {
                 int orderId = rs.getInt("id");
+//                int name = rs.getInt("name");
                 double totalPrice = rs.getDouble("total_price");
                 Timestamp orderDate = rs.getTimestamp("order_date");
 
@@ -147,6 +153,7 @@ public class OrderDAO {
                     while (itemRs.next()) {
                         OrderItem item = new OrderItem(
                                 itemRs.getInt("id"),
+//                                itemRs.getString("name"),
                                 itemRs.getInt("product_id"),
                                 itemRs.getInt("quantity"),
                                 itemRs.getDouble("price")
@@ -174,6 +181,7 @@ public class OrderDAO {
             while (rs.next()) {
                 items.add(new OrderItem(
                         rs.getInt("id"),
+                        rs.getString("name"),
                         rs.getInt("product_id"),
                         rs.getInt("quantity"),
                         rs.getDouble("price")

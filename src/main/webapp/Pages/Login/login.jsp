@@ -14,6 +14,14 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/Pages/Login/LoginCss.css"/>
     </head>
     <body>
+        
+        <div class="navbar">
+            <div class="navbar-brand">School Merchandise Portal</div>
+            <div class="navbar-links">
+            </div>
+        </div>
+            
+            
         <h2>Login Portal</h2>
         <form  action="${pageContext.request.contextPath}/login" method="post" id="login-container">
             <!--<label for="username">Username:</label>-->

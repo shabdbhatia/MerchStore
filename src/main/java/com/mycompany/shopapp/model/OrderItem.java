@@ -10,10 +10,18 @@ package com.mycompany.shopapp.model;
  */
 public class OrderItem {
     private int id;
+    private String name;
     private int productId;
     private int quantity;
     private double price;
 
+    public OrderItem(int id, String name, int productId, int quantity, double price) {
+        this.id = id;
+        this.name = name;
+        this.productId = productId;
+        this.quantity = quantity;
+        this.price = price;
+    }
     public OrderItem(int id, int productId, int quantity, double price) {
         this.id = id;
         this.productId = productId;
@@ -29,7 +37,15 @@ public class OrderItem {
     public void setId(int id) {
         this.id = id;
     }
+    
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+    
     public int getProductId() {
         return productId;
     }

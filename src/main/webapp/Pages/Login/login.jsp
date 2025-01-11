@@ -4,7 +4,23 @@
     Author     : shabd
 --%>
 
+<%@page import="com.mycompany.shopapp.model.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    User user = (User) session.getAttribute("user");
+    if (user != null && "A".equalsIgnoreCase(user.getRole())) {
+        response.sendRedirect(request.getContextPath() + "/admin/dashboard");
+        return;
+    }
+%>
+<%
+    
+    if (user != null && "U".equalsIgnoreCase(user.getRole())) {
+        response.sendRedirect(request.getContextPath() + "/user-dashboard");
+        return;
+    }
+%>
+
 <!DOCTYPE html>
 <html>
     <head>

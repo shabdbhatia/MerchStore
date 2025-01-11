@@ -4,10 +4,24 @@
     Author     : shabd
 --%>
 
+<%@page import="com.mycompany.shopapp.model.User"%>
 <%@page import="java.util.List"%>
 <%@page import="com.mycompany.shopapp.model.OrderItem"%>
 <%@page import="com.mycompany.shopapp.model.Order"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
+    response.setHeader("Pragma", "no-cache"); // HTTP 1.0
+    response.setDateHeader("Expires", 0); // Proxies
+%>
+<%
+    // Check if the user session exists and the role is admin
+    User user = (User) session.getAttribute("user");
+    if (user == null || !"A".equalsIgnoreCase(user.getRole())) {
+        response.sendRedirect(request.getContextPath() + "/Pages/Login/login.jsp");
+        return;
+    }
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -21,7 +35,7 @@
             <div class="navbar-brand">School Merchandise Admin Portal</div>
             <div class="navbar-links">
                 <a href="${pageContext.request.contextPath}/Pages/Admin/admin_dashboard.jsp">Admin Dashboard</a>
-                <a href="${pageContext.request.contextPath}/Pages/Login/login.jsp">Logout</a>
+                <a href="${pageContext.request.contextPath}/logout">Logout</a>
             </div>
         </div>
 
@@ -74,7 +88,6 @@
             </table>
 
         </div>
-
-        <a href="../Pages/Admin/admin_dashboard.jsp" >Back to Admin Dashboard</a>
+        <a href="${pageContext.request.contextPath}/admin/dashboard">Back to Admin Dashboard</a>
     </body>
 </html>

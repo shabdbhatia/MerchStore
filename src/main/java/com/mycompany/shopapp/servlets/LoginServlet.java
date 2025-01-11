@@ -84,10 +84,11 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("user", user);
             session.setAttribute("userId", user.getId());
             if ("A".equalsIgnoreCase(user.getRole())) {
-                response.sendRedirect("Pages/Admin/admin_dashboard.jsp");
+//                response.sendRedirect("Pages/Admin/admin_dashboard.jsp");
+                response.sendRedirect("admin/dashboard");
             } else {
 //                response.sendRedirect("Pages/User/user_dashboard.jsp");
-                  response.sendRedirect("user-dashboard");
+                response.sendRedirect("user-dashboard");
             }
         } else {
             request.setAttribute("errorMessage", "Invalid username or password");

@@ -6,9 +6,15 @@
 <%@page import="com.mycompany.shopapp.model.User"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
+    response.setHeader("Pragma", "no-cache"); // HTTP 1.0
+    response.setDateHeader("Expires", 0); // Proxies
+%>
+<%
+    // Check if the user session exists and the role is admin
     User user = (User) session.getAttribute("user");
     if (user == null || !"A".equalsIgnoreCase(user.getRole())) {
-        response.sendRedirect("../Pages/login.jsp");
+        response.sendRedirect(request.getContextPath() + "/Pages/Login/login.jsp");
         return;
     }
 %>
@@ -26,7 +32,7 @@
             <div class="navbar-brand">School Merchandise Admin Portal</div>
             <div class="navbar-links">
                 <a href="${pageContext.request.contextPath}/Pages/Admin/admin_dashboard.jsp">Admin Dashboard</a>
-                <a href="${pageContext.request.contextPath}/Pages/Login/login.jsp">Logout</a>
+                <a href="${pageContext.request.contextPath}/logout">Logout</a>
             </div>
         </div>
         
@@ -54,7 +60,7 @@
             </a>
 
             <!-- Tile for Logout -->
-            <a href="/ShopApp" class="dashboard-tile">
+            <a href="${pageContext.request.contextPath}/logout" class="dashboard-tile">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"/></svg>
                 <span>Logout</span>
             </a>

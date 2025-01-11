@@ -1,3 +1,4 @@
+/Users/shabd/NetBeansProjects/ShopApp/src/main/java/com/mycompany/shopapp/servlets/LogoutServlet.java
 /Users/shabd/NetBeansProjects/ShopApp/src/main/java/com/mycompany/shopapp/servlets/LoginServlet.java
 /Users/shabd/NetBeansProjects/ShopApp/src/main/java/com/mycompany/shopapp/servlets/admin/OrderManagementServlet.java
 /Users/shabd/NetBeansProjects/ShopApp/src/main/java/com/mycompany/shopapp/servlets/user/OrderHistoryServlet.java
@@ -11,6 +12,7 @@
 /Users/shabd/NetBeansProjects/ShopApp/src/main/java/com/mycompany/shopapp/dao/OrderDAO.java
 /Users/shabd/NetBeansProjects/ShopApp/src/main/java/com/mycompany/shopapp/model/Order.java
 /Users/shabd/NetBeansProjects/ShopApp/src/main/java/com/mycompany/shopapp/model/Product.java
+/Users/shabd/NetBeansProjects/ShopApp/src/main/java/com/mycompany/shopapp/servlets/admin/AdminDashboardServlet.java
 /Users/shabd/NetBeansProjects/ShopApp/src/main/java/com/mycompany/shopapp/servlets/user/OrderServlet.java
 /Users/shabd/NetBeansProjects/ShopApp/src/main/java/com/mycompany/shopapp/resources/JakartaEE10Resource.java
 /Users/shabd/NetBeansProjects/ShopApp/src/main/java/com/mycompany/shopapp/servlets/user/UserDashboardServlet.java

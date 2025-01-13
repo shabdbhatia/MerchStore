@@ -17,7 +17,7 @@
 <%
     // Check if the user session exists and the role is admin
     User user = (User) session.getAttribute("user");
-    if (user == null || !"A".equalsIgnoreCase(user.getRole())) {
+    if (user == null || !"U".equalsIgnoreCase(user.getRole())) {
         response.sendRedirect(request.getContextPath() + "/Pages/Login/login.jsp");
         return;
     }
@@ -36,7 +36,7 @@
                 <a href="${pageContext.request.contextPath}/user-dashboard">Catalog</a>
                 <a href="cart">Cart</a>
                 <a href="${pageContext.request.contextPath}/order-history">Order History</a>
-                <a href="./Pages/Login/login.jsp">Logout</a>
+                <a href="${pageContext.request.contextPath}/logout">Logout</a>
             </div>
         </div>
 
@@ -59,6 +59,7 @@
                         <th>Date</th>
                         <th>Total Price</th>
                         <th>Items</th>
+                        <th>Payment Status</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -74,11 +75,26 @@
                                 <%
                                     for (OrderItem item : order.getItems()) {
                                 %>
-                                <li>Product ID: <%= item.getProductId()%>, Quantity: <%= item.getQuantity()%>, Price: <%= item.getPrice()%></li>
+                                <li>Product ID <%= item.getProductId()%>, Quantity: <%= item.getQuantity()%>, Price: <%= item.getPrice()%></li>
                                     <%
                                         }
                                     %>
                             </ul>
+                        </td>
+                        <td>
+                            Payment Status: <%= order.getStatus()%>
+                            <%
+                                if ("pending".equalsIgnoreCase(order.getStatus())) {
+                            %>
+                            <!-- Pay Now Button -->
+                            <form action="<%= request.getContextPath()%>/payPendingAmt" method="post" style="display:inline;">
+                                <input type="hidden" name="orderId" value="<%= order.getId()%>" />
+                                <input type="hidden" name="totalAmount" value="<%= order.getTotalPrice()%>" />
+                                <button type="submit" class="pay-now-button">Pay Now</button>
+                            </form>
+                            <%
+                                }
+                            %>
                         </td>
                     </tr>
                     <%

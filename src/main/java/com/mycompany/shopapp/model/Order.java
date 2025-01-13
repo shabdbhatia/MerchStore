@@ -16,13 +16,15 @@ public class Order {
     private int userId;
     private Date orderDate;
     private double totalPrice;
+    private String status;
     private List<OrderItem> items; // List of items in the order
 
-    public Order(int id, int userId, Date orderDate, double totalPrice, List<OrderItem> items) {
+    public Order(int id, int userId, Date orderDate, double totalPrice, String status, List<OrderItem> items) {
         this.id = id;
         this.userId = userId;
         this.orderDate = orderDate;
         this.totalPrice = totalPrice;
+        this.status = status;
         this.items = items;
     }
 
@@ -57,6 +59,14 @@ public class Order {
 
     public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
+    }
+    
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public List<OrderItem> getItems() {

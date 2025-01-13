@@ -14,8 +14,8 @@
 %>
 <%
     // Check if the user session exists and the role is admin
-    User user = (User) session.getAttribute("user");
-    if (user == null || !"A".equalsIgnoreCase(user.getRole())) {
+    User usercookie = (User) session.getAttribute("user");
+    if (usercookie == null || !"A".equalsIgnoreCase(usercookie.getRole())) {
         response.sendRedirect(request.getContextPath() + "/Pages/Login/login.jsp");
         return;
     }
@@ -33,7 +33,7 @@
             <div class="navbar-brand">School Merchandise Admin Portal</div>
             <div class="navbar-links">
                 <a href="${pageContext.request.contextPath}/Pages/Admin/admin_dashboard.jsp">Admin Dashboard</a>
-                <a href="${pageContext.request.contextPath}/Pages/Login/login.jsp">Logout</a>
+                <a href="${pageContext.request.contextPath}/logout">Logout</a>
             </div>
         </div>
 

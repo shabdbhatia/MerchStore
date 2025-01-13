@@ -16,7 +16,7 @@
 <%
     // Check if the user session exists and the role is admin
     User user = (User) session.getAttribute("user");
-    if (user == null || !"A".equalsIgnoreCase(user.getRole())) {
+    if (user == null || !"U".equalsIgnoreCase(user.getRole())) {
         response.sendRedirect(request.getContextPath() + "/Pages/Login/login.jsp");
         return;
     }
@@ -55,7 +55,7 @@
                 <a href="${pageContext.request.contextPath}/user-dashboard">Catalog</a>
                 <a href="cart">Cart</a>
                 <a href="${pageContext.request.contextPath}/order-history">Order History</a>
-                <a href="./Pages/Login/login.jsp">Logout</a>
+                <a href="${pageContext.request.contextPath}/logout">Logout</a>
             </div>
         </div>
         <h2>Welcome to Our Product Catalog</h2>

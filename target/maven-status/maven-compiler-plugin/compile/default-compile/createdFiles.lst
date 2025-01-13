@@ -10,10 +10,12 @@ com/mycompany/shopapp/model/Product.class
 com/mycompany/shopapp/servlets/admin/UserManagementServlet.class
 com/mycompany/shopapp/dao/OrderDAO.class
 com/mycompany/shopapp/resources/JakartaEE10Resource.class
+com/mycompany/shopapp/servlets/user/PaymentProcessingServlet.class
 com/mycompany/shopapp/servlets/admin/OrderManagementServlet.class
 com/mycompany/shopapp/servlets/admin/AdminDashboardServlet.class
 com/mycompany/shopapp/model/User.class
 com/mycompany/shopapp/servlets/user/UserDashboardServlet.class
+com/mycompany/shopapp/servlets/user/PayPendingServlet.class
 com/mycompany/shopapp/model/Order.class
 com/mycompany/shopapp/servlets/admin/ProductManagementServlet.class
 com/mycompany/shopapp/servlets/user/OrderHistoryServlet.class

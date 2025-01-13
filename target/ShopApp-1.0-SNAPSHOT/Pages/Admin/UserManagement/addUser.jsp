@@ -33,7 +33,7 @@
             <div class="navbar-brand">School Merchandise Admin Portal</div>
             <div class="navbar-links">
                 <a href="${pageContext.request.contextPath}/Pages/Admin/admin_dashboard.jsp">Admin Dashboard</a>
-                <a href="${pageContext.request.contextPath}/Pages/Login/login.jsp">Logout</a>
+                <a href="${pageContext.request.contextPath}/logout">Logout</a>
             </div>
         </div>
             

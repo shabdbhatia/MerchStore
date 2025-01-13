@@ -19,6 +19,8 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -27,6 +29,14 @@ import java.util.List;
 @WebServlet(name = "OrderServlet", urlPatterns = {"/checkout"})
 public class OrderServlet extends HttpServlet {
 
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        
+
+    }
+
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
@@ -38,17 +48,24 @@ public class OrderServlet extends HttpServlet {
             return;
         }
 
+        // Calculate total price
         double totalPrice = cartItems.stream()
                                      .mapToDouble(item -> item.getPrice() * item.getQuantity())
                                      .sum();
 
-        Order order = new Order(0, userId, null, totalPrice, cartItems);
+        // Create an order object and save to the database (but do not finalize it yet)
+        Order order = new Order(0, userId, null, totalPrice,"Pending", cartItems);
         OrderDAO orderDAO = new OrderDAO();
         int orderId = orderDAO.createOrder(order);
 
         if (orderId > 0) {
-            session.removeAttribute("CartItems");
-            response.sendRedirect("orderSuccess.jsp?orderId=" + orderId);
+            // Store the order ID in the session for payment processing
+            session.setAttribute("pendingOrderId", orderId);
+            session.setAttribute("pendingOrderAmount", totalPrice);
+
+            // Forward to the payment gateway
+            request.setAttribute("amount", totalPrice);
+            request.getRequestDispatcher("Pages/User/payment_gateway.jsp").forward(request, response);
         } else {
             response.sendRedirect("cart.jsp?error=Failed to place order");
         }

@@ -24,24 +24,30 @@ public class OrderDAO {
         return DriverManager.getConnection(url, user, password);
     }
 
+    // Method to create a new order
     public int createOrder(Order order) {
         int orderId = -1;
-        String orderSql = "INSERT INTO orders (user_id, total_price) VALUES (?, ?)";
+        String orderSql = "INSERT INTO orders (user_id, total_price, status) VALUES (?, ?, ?)";
         String itemSql = "INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = getConnection()) {
             conn.setAutoCommit(false);
 
+            // Insert the order
             try (PreparedStatement orderStmt = conn.prepareStatement(orderSql, Statement.RETURN_GENERATED_KEYS)) {
                 orderStmt.setInt(1, order.getUserId());
                 orderStmt.setDouble(2, order.getTotalPrice());
+                orderStmt.setString(3, "Pending"); // Default status
+
                 orderStmt.executeUpdate();
 
+                // Get the generated order ID
                 ResultSet rs = orderStmt.getGeneratedKeys();
                 if (rs.next()) {
                     orderId = rs.getInt(1);
                 }
 
+                // Insert the order items
                 try (PreparedStatement itemStmt = conn.prepareStatement(itemSql)) {
                     for (OrderItem item : order.getItems()) {
                         itemStmt.setInt(1, orderId);
@@ -61,9 +67,11 @@ public class OrderDAO {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return orderId;
     }
 
+    // Method to delete an order
     public void deleteOrder(int orderId) {
         String deleteOrderItemsSql = "DELETE FROM order_items WHERE order_id = ?";
         String deleteOrderSql = "DELETE FROM orders WHERE id = ?";
@@ -87,49 +95,34 @@ public class OrderDAO {
         }
     }
 
+    // Method to fetch all orders
     public List<Order> getAllOrders() {
         List<Order> orders = new ArrayList<>();
         String orderSql = "SELECT * FROM orders";
         String itemSql = "SELECT * FROM order_items WHERE order_id = ?";
-        System.out.println("Stared getting all orders");
+
         try (Connection conn = getConnection(); PreparedStatement orderStmt = conn.prepareStatement(orderSql)) {
             ResultSet rs = orderStmt.executeQuery();
 
             while (rs.next()) {
                 int orderId = rs.getInt("id");
-//                int name = rs.getInt("name");
                 int userId = rs.getInt("user_id");
                 double totalPrice = rs.getDouble("total_price");
+                String status = rs.getString("status");
                 Timestamp orderDate = rs.getTimestamp("order_date");
 
-                List<OrderItem> items = new ArrayList<>();
-                try (PreparedStatement itemStmt = conn.prepareStatement(itemSql)) {
-                    itemStmt.setInt(1, orderId);
-                    ResultSet itemRs = itemStmt.executeQuery();
+                List<OrderItem> items = getOrderItems(orderId, conn);
 
-                    while (itemRs.next()) {
-                        OrderItem item = new OrderItem(
-                                itemRs.getInt("id"),
-//                                itemRs.getString("name"),
-                                itemRs.getInt("product_id"),
-                                itemRs.getInt("quantity"),
-                                itemRs.getDouble("price")
-                        );
-                        items.add(item);
-                    }
-                }
-
-                orders.add(new Order(orderId, userId, orderDate, totalPrice, items));
-                System.out.println("Added individual order");
+                orders.add(new Order(orderId, userId, orderDate, totalPrice, status, items));
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("Returning Orders");
+
         return orders;
-        
     }
 
+    // Method to fetch orders by user ID
     public List<Order> getOrdersByUserId(int userId) {
         List<Order> orders = new ArrayList<>();
         String orderSql = "SELECT * FROM orders WHERE user_id = ?";
@@ -141,35 +134,22 @@ public class OrderDAO {
 
             while (rs.next()) {
                 int orderId = rs.getInt("id");
-//                int name = rs.getInt("name");
                 double totalPrice = rs.getDouble("total_price");
+                String status = rs.getString("status");
                 Timestamp orderDate = rs.getTimestamp("order_date");
 
-                List<OrderItem> items = new ArrayList<>();
-                try (PreparedStatement itemStmt = conn.prepareStatement(itemSql)) {
-                    itemStmt.setInt(1, orderId);
-                    ResultSet itemRs = itemStmt.executeQuery();
+                List<OrderItem> items = getOrderItems(orderId, conn);
 
-                    while (itemRs.next()) {
-                        OrderItem item = new OrderItem(
-                                itemRs.getInt("id"),
-//                                itemRs.getString("name"),
-                                itemRs.getInt("product_id"),
-                                itemRs.getInt("quantity"),
-                                itemRs.getDouble("price")
-                        );
-                        items.add(item);
-                    }
-                }
-
-                orders.add(new Order(orderId, userId, orderDate, totalPrice, items));
+                orders.add(new Order(orderId, userId, orderDate, totalPrice, status, items));
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return orders;
     }
 
+    // Utility method to fetch order items
     private List<OrderItem> getOrderItems(int orderId, Connection conn) throws SQLException {
         List<OrderItem> items = new ArrayList<>();
         String itemSql = "SELECT * FROM order_items WHERE order_id = ?";
@@ -181,14 +161,27 @@ public class OrderDAO {
             while (rs.next()) {
                 items.add(new OrderItem(
                         rs.getInt("id"),
-                        rs.getString("name"),
                         rs.getInt("product_id"),
                         rs.getInt("quantity"),
                         rs.getDouble("price")
                 ));
             }
         }
+
         return items;
+    }
+
+    // Method to mark an order as paid
+    public boolean markOrderAsPaid(int orderId) throws Exception {
+        String sql = "UPDATE orders SET status = 'Paid' WHERE id = ?";
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, orderId);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    
     }
 
 }

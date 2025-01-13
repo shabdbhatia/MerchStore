@@ -22,26 +22,36 @@
 %>
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Add Product</title>
-</head>
-<body>
-    <h2>Add Product</h2>
-    <form action="productManagement" method="post" enctype="multipart/form-data">
-        <input type="hidden" name="action" value="add">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
-        <br>
-        <label for="description">Description:</label>
-        <textarea id="description" name="description" required></textarea>
-        <br>
-        <label for="price">Price:</label>
-        <input type="number" id="price" name="price" step="0.01" required>
-        <br>
-        <label for="image">Image:</label>
-        <input type="file" id="image" name="image" accept="image/*" required>
-        <br>
-        <button type="submit">Add Product</button>
-    </form>
-</body>
+    <head>
+        <title>Add Product</title>
+    </head>
+    <body>
+
+        <div class="navbar">
+            <div class="navbar-brand">School Merchandise Admin Portal</div>
+            <div class="navbar-links">
+                <a href="${pageContext.request.contextPath}/Pages/Admin/admin_dashboard.jsp">Admin Dashboard</a>
+                <a href="${pageContext.request.contextPath}/logout">Logout</a>
+            </div>
+        </div>
+
+
+        <h2>Add Product</h2>
+        <form action="productManagement" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="action" value="add">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            <br>
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" required></textarea>
+            <br>
+            <label for="price">Price:</label>
+            <input type="number" id="price" name="price" step="0.01" required>
+            <br>
+            <label for="image">Image:</label>
+            <input type="file" id="image" name="image" accept="image/*" required>
+            <br>
+            <button type="submit">Add Product</button>
+        </form>
+    </body>
 </html>

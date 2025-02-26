@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDAO {
+    // Function to get SQL connection
     private Connection getConnection() throws Exception {
         String url = "jdbc:mysql://localhost:3306/MerchStore";
         String user = "root";
@@ -17,6 +18,7 @@ public class ProductDAO {
         return DriverManager.getConnection(url, user, password);
     }
 
+    // Method to retrive every product in a list
     public List<Product> getAllProducts() {
         List<Product> products = new ArrayList<>();
         String sql = "SELECT * FROM products";
@@ -39,6 +41,7 @@ public class ProductDAO {
         return products;
     }
 
+    // Method to retrive a specific product based on its id
     public Product getProductById(int id) {
         Product product = null;
         String sql = "SELECT * FROM products WHERE id = ?";
@@ -60,7 +63,8 @@ public class ProductDAO {
         }
         return product;
     }
-
+    
+    // Method to add a product
     public void addProduct(String name, String description, double price, byte[] image) {
         String sql = "INSERT INTO products (name, description, price, image) VALUES (?, ?, ?, ?)";
 
@@ -75,6 +79,7 @@ public class ProductDAO {
         }
     }
 
+    // Method to update a product
     public void updateProduct(int id, String name, String description, double price, byte[] image) {
         String sql = "UPDATE products SET name = ?, description = ?, price = ?, image = ? WHERE id = ?";
 
@@ -90,6 +95,7 @@ public class ProductDAO {
         }
     }
 
+    // Method to delete a product
     public void deleteProduct(int id) {
         String sql = "DELETE FROM products WHERE id = ?";
 

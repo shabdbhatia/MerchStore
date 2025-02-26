@@ -36,7 +36,12 @@ public class OrderHistoryServlet extends HttpServlet {
         OrderDAO orderDAO = new OrderDAO();
         List<Order> orders = orderDAO.getOrdersByUserId(userId);
         System.out.println("Orders fetched: " + orders.size());
-
+        
+//        String orderDateParam = request.getParameter("orderDate");
+//        if (orderDateParam != null && !orderDateParam.isEmpty()) {
+//            orders = filterOrdersByDate(orders, orderDateParam);
+//        }
+        
         // Add the orders to the request scope
         request.setAttribute("orders", orders);
 

@@ -18,6 +18,7 @@ import java.util.List;
  */
 public class UserDAO
 {
+    // SQL connection
     private Connection getConnection() throws Exception {
         String url = "jdbc:mysql://localhost:3306/MerchStore";
         String user = "root";
@@ -26,6 +27,7 @@ public class UserDAO
         return DriverManager.getConnection(url, user, password);
     }
 
+    // Method for logging in through validation
     public User validateUser(String username, String password) {
         User user = null;
         String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
@@ -42,6 +44,7 @@ public class UserDAO
         return user;
     }
 
+    // Method to retrieve all users in the database
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
         String sql = "SELECT * FROM users";
@@ -61,6 +64,7 @@ public class UserDAO
         return users;
     }
     
+    // Method to get a specific user
     public User getUserById(int id) {
         User user = null;
         String sql = "SELECT * FROM users WHERE id = ?";
@@ -76,6 +80,7 @@ public class UserDAO
         return user;
     }
 
+    // Method to add a user
     public void addUser(String username, String password, String role) {
         String sql = "INSERT INTO users (username, password, role) VALUES (?, ?, ?)";
         try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -88,6 +93,7 @@ public class UserDAO
         }
     }
 
+    // Method to update a user
     public void updateUser(int id, String username, String password, String role) {
         String sql = "UPDATE users SET username = ?, password = ?, role = ? WHERE id = ?";
         try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -101,6 +107,7 @@ public class UserDAO
         }
     }
 
+    // Method to delete a user
     public void deleteUser(int id) {
         String sql = "DELETE FROM users WHERE id = ?";
         try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -111,6 +118,7 @@ public class UserDAO
         }
     }
     
+    // Method to get a specific user based off the username
     public User getUserByUsername(String username) {
     User user = null;
     String sql = "SELECT * FROM users WHERE username = ?";

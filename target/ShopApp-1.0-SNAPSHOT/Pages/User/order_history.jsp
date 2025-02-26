@@ -41,6 +41,14 @@
         </div>
 
         <h1>Order History</h1>
+
+        <form action="<%= request.getContextPath()%>/order-history" method="get" class="date-filter-form">
+            <label for="orderDate">Search by Date:</label>
+            <input type="date" id="orderDate" name="orderDate" value="<%= request.getParameter("orderDate") != null ? request.getParameter("orderDate") : ""%>" />
+            <button type="submit">Search</button>
+        </form>
+
+
         <%
             List<Order> orders = (List<Order>) request.getAttribute("orders");
             if (orders == null || orders.isEmpty()) {
